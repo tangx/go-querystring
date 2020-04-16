@@ -335,21 +335,3 @@ func TestTagParsing(t *testing.T) {
 	}
 }
 
-type Person struct {
-	Name    string   `url:"name,omitempty"`
-	Age     int      `url:"age,omitempty"`
-	Address []string `url:"address,omitempty,dotnumbered,numbered1"`
-}
-
-var user = Person{
-	Name:    "zhangsan",
-	Age:     10,
-	Address: []string{"sichuan", "chengdu"},
-}
-
-func Test_Manual(t *testing.T) {
-
-	values, _ := Values(user)
-	fmt.Println(values)
-	fmt.Println(values.Encode())
-}
