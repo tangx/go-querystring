@@ -211,23 +211,22 @@ func reflectValue(values url.Values, val reflect.Value, scope string) error {
 				}
 				values.Add(name, s.String())
 			} else {
+				// number start with 1 instead of 0
+				var n int
+				if opts.Contains("numbered1") {
+					n = 1
+				}
+
 				for i := 0; i < sv.Len(); i++ {
-					var n int
-					// number start with 1 instead of 0
-					if opts.Contains("numbered1") {
-						n = i + 1
-					} else {
-						n = i
-					}
 
 					k := name
 					// add number, such as "address0"
 					if opts.Contains("numbered") {
-						k = fmt.Sprintf("%s%d", name, n)
+						k = fmt.Sprintf("%s%d", name, i+n)
 					}
 					// add number with dot , such as "address.0"
 					if opts.Contains("dotnumbered") {
-						k = fmt.Sprintf("%s.%d", name, n)
+						k = fmt.Sprintf("%s.%d", name, i+n)
 					}
 					values.Add(k, valueString(sv.Index(i), opts))
 				}
